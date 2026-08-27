@@ -14,7 +14,8 @@ RAW_DATA_DIR = PROJECT_ROOT / "data" / "raw"
 OFCOM_DATA_DIR = RAW_DATA_DIR / "ofcom"
 OPENCELLID_DATA_DIR = RAW_DATA_DIR / "opencellid"
 
-BUILD_DIR = PROJECT_ROOT / "data" / "processed"
+BUILD_DIR = PROJECT_ROOT / "work"
+PROCESSED_DATA_DIR = PROJECT_ROOT / "processed"
 RESULTS_DIR = PROJECT_ROOT / "results"
 FIGURES_DIR = RESULTS_DIR / "figures"
 
