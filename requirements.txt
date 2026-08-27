@@ -1,0 +1,17 @@
+numpy==2.0.2
+pandas==2.2.3
+scikit-learn==1.6.1
+xgboost==3.4.0
+lightgbm==4.6.0
+
+geopandas
+shapely
+rasterio
+pyproj
+earthengine-api
+
+scipy
+matplotlib
+seaborn
+imbalanced-learn
+requests
