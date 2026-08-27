@@ -10,6 +10,10 @@ PROJECT_ROOT = Path(
     "/content/drive/MyDrive/england-lte-5g-signal-prediction"
 )
 
+# Replace this with the ID of a Google Cloud project that has
+# the Earth Engine API enabled.
+EARTH_ENGINE_PROJECT = "your-google-cloud-project-id"
+
 RAW_DATA_DIR = PROJECT_ROOT / "data" / "raw"
 OFCOM_DATA_DIR = RAW_DATA_DIR / "ofcom"
 OPENCELLID_DATA_DIR = RAW_DATA_DIR / "opencellid"
