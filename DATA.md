@@ -1,17 +1,17 @@
 # Data
 
-This document describes the original external data sources, the expected raw-data filenames and the analysis-ready processed datasets included in this repository.
+This document describes the original external data sources, the filenames used by the notebooks and the analysis-ready processed datasets included in this repository.
 
 ## Data availability
 
 The original Ofcom LTE and 5G NR measurement files and the original OpenCellID UK export are not included in this repository. The Ofcom files are several gigabytes in size, while access to the OpenCellID export is subject to the provider's current account, access and attribution requirements.
 
-To facilitate reproduction of the principal analyses without requiring the original large files, the processed grid-level datasets used in the dissertation are provided in `processed/`.
+To support reproduction of the principal analyses without requiring the original large files, the processed grid-level datasets used in the dissertation are provided in `processed/`.
 
 ## Original data to download
 
-| Data | Filename expected by the notebooks | Source |
-| ---- | ---------------------------------- | ------ |
+| Data | Filename used by the notebooks | Source |
+| ---- | ------------------------------ | ------ |
 | Ofcom 4G LTE measurements for 2025 | `4g-lte-2025-mobile-signal-measurement-data.csv` | [Ofcom 2025 LTE ZIP download](https://www.ofcom.org.uk/siteassets/resources/documents/phones-telecoms-and-internet/coverage/mobile-signal-strength-measurement-data-from-spectrum-assurance-vehicles/4g-lte-2025-mobile-signal-measurement-data.zip?v=413277) |
 | Ofcom 5G NR measurements for 2025 | `5g-nr-2025-mobile-signal-measurement-data.csv` | [Ofcom 2025 5G NR ZIP download](https://www.ofcom.org.uk/siteassets/resources/documents/phones-telecoms-and-internet/coverage/mobile-signal-strength-measurement-data-from-spectrum-assurance-vehicles/5g-nr-2025-mobile-signal-measurement-data.zip?v=413278) |
 | OpenCellID UK export (MCC 234) | `234_raw.csv` | [OpenCellID country downloads](https://opencellid.org/downloads/) |
@@ -25,23 +25,33 @@ After downloading the Ofcom ZIP archives, extract the CSV files and retain the f
 
 Downloading an OpenCellID country export may require an account and API access token. Users should consult the current [OpenCellID download page](https://opencellid.org/downloads/) and [server usage policy](https://wiki.opencellid.org/wiki/Server_usage_policy) before downloading or redistributing the data.
 
-## Expected raw-data layout
+## Original Google Drive layout
 
-For the complete Google Drive-based data-construction workflow, place the downloaded and extracted files as shown below:
+The notebooks were developed and executed using the following Google Drive structure:
 
 ```text
 MyDrive/
-└── england-lte-5g-signal-prediction/
-    └── data/
-        └── raw/
-            ├── ofcom/
-            │   ├── 4g-lte-2025-mobile-signal-measurement-data.csv
-            │   └── 5g-nr-2025-mobile-signal-measurement-data.csv
-            └── opencellid/
-                └── 234_raw.csv
+└── Dissertation/
+    ├── Ofcom dataset/
+    │   ├── 4g-lte-2025-mobile-signal-measurement-data.csv
+    │   └── 5g-nr-2025-mobile-signal-measurement-data.csv
+    ├── OpencellID/
+    │   └── 234_raw.csv
+    └── Experiments/
+        └── 최종실험(수정)/
+            └── Dataset_Build/
+                ├── 00_Grid/
+                ├── 01_Ofcom/
+                ├── 02_Sentinel1/
+                ├── 03_Sentinel2/
+                ├── 04_WorldCover/
+                ├── 05_Population/
+                ├── 06_Nightlight/
+                ├── 07_OpenCellID/
+                └── 08_Final_Datasets/
 ```
 
-If the project is stored elsewhere, update the relevant path settings in `config.py` or the notebook setup cells.
+The paths above document the environment used to produce the submitted results. Users do not need to reproduce the same folder names exactly, but they must update the relevant path variables in each notebook to match their own local or cloud directory structure.
 
 ## Processed datasets included in this repository
 
@@ -59,7 +69,7 @@ processed/
 └── dataset25_final.csv
 ```
 
-These files contain 4,985 grid cells. Dataset25 contains the complete set of 35 predictors used in the final modelling experiments.
+These files contain 4,985 grid cells with at least one LTE or 5G NR label. Dataset25 contains the complete set of 35 predictors used in the final modelling experiments.
 
 The processed files support the following notebooks:
 
@@ -70,7 +80,7 @@ The processed files support the following notebooks:
 | `07_analyse_final_models.ipynb` | `dataset25_final.csv` |
 | `08_run_advanced_experiments.ipynb` | `dataset25_final.csv` |
 
-These four notebooks can be run without the original Ofcom or OpenCellID files.
+These four notebooks can be evaluated without the original Ofcom or OpenCellID files after their input paths have been updated to the location of the supplied processed datasets.
 
 ## Complete data-construction workflow
 
@@ -90,8 +100,8 @@ The external requirements are:
 
 - Notebook 01 requires the original Ofcom LTE and 5G NR measurement files.
 - Notebook 02 requires the outputs of Notebook 01 and Google Earth Engine access.
-- Notebook 03 requires the output of Notebook 02 and the original OpenCellID export.
-- Notebook 05 requires Dataset20 and the original OpenCellID export.
+- Notebook 03 requires the output of Notebook 02 and the original OpenCellID UK export.
+- Notebook 05 requires Dataset20 and the original OpenCellID UK export.
 
 Notebook 04 is an exploratory-analysis notebook and is not a required data-construction step.
 
@@ -109,7 +119,9 @@ Notebook 02 accesses the following datasets through Google Earth Engine:
 | WorldPop population data | `WorldPop/GP/100m/pop` |
 | VIIRS monthly night-time-light data | `NOAA/VIIRS/DNB/MONTHLY_V1/VCMSLCFG` |
 
-Google Earth Engine authentication and access to a Google Cloud project with the Earth Engine API enabled are required for Notebook 02. The project ID should be specified in `config.py`.
+Google Earth Engine authentication and access to a Google Cloud project with the Earth Engine API enabled are required for Notebook 02.
+
+The Google Cloud project ID appearing in Notebook 02 corresponds to the environment used for the original analysis. A user reproducing the workflow should replace it with the ID of a Google Cloud project to which they have access and for which the Earth Engine API has been enabled.
 
 The England administrative boundary is downloaded from [GADM version 4.1](https://geodata.ucdavis.edu/gadm/gadm4.1/gpkg/gadm41_GBR.gpkg) by Notebook 01.
 
@@ -127,6 +139,6 @@ The original data remain subject to the terms, licences and attribution requirem
 
 OpenCellID identifies its data as licensed under the Creative Commons Attribution-ShareAlike 4.0 International licence and requires appropriate attribution. Further information is available from the [OpenCellID download page](https://opencellid.org/downloads/).
 
-The repository's `LICENSE` file applies to the original project code unless explicitly stated otherwise. It does not replace or override the licences and usage conditions of Ofcom, OpenCellID, Google Earth Engine datasets, GADM or any other external data provider.
+The repository's [`LICENSE`](LICENSE) file applies to the original project code unless explicitly stated otherwise. It does not replace or override the licences and usage conditions of Ofcom, OpenCellID, Google Earth Engine datasets, GADM or any other external data provider.
 
 Users should consult each provider's current terms before downloading, using or redistributing raw or derived data.
