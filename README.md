@@ -24,26 +24,33 @@ Random Forest, XGBoost and LightGBM were compared for three signal-quality class
 england-lte-5g-signal-prediction/
 ├── notebooks/          # Eight notebooks documenting the complete workflow
 ├── processed/          # Analysis-ready datasets for core reproduction
-├── DATA.md             # Raw-data sources and expected filenames
-├── config.py           # Shared file and directory settings
+├── DATA.md             # Data sources, filenames and access requirements
 ├── requirements.txt    # Required Python packages
 ├── README.md
 ├── LICENSE
 └── .gitignore
 ```
 
+## Submitted and GitHub versions
+
+The notebooks and processed datasets in this GitHub repository are identical to those provided with the submitted dissertation materials.
+
+The notebooks were originally developed and successfully executed in Google Colab using files stored in Google Drive. The original notebook structure and analysis code have been retained to ensure consistency with the submitted results.
+
+Because the notebooks retain the paths used in the original Google Drive environment, users wishing to rerun them should update the relevant file paths to match their own local or cloud directory structure.
+
 ## Recommended review order
 
 For a concise review of the project and its reproducibility, the following order is recommended:
 
-1. Read [`README.md`](README.md) for the project overview and execution instructions.
+1. Read [`README.md`](README.md) for the project overview and execution guidance.
 2. Read [`DATA.md`](DATA.md) for data sources, access requirements and file descriptions.
-3. Run [`04_exploratory_data_analysis.ipynb`](notebooks/04_exploratory_data_analysis.ipynb).
-4. Run [`06_compare_feature_sets.ipynb`](notebooks/06_compare_feature_sets.ipynb).
-5. Run [`07_analyse_final_models.ipynb`](notebooks/07_analyse_final_models.ipynb).
-6. Run [`08_run_advanced_experiments.ipynb`](notebooks/08_run_advanced_experiments.ipynb).
+3. Review and, if desired, rerun [`04_exploratory_data_analysis.ipynb`](notebooks/04_exploratory_data_analysis.ipynb).
+4. Review and, if desired, rerun [`06_compare_feature_sets.ipynb`](notebooks/06_compare_feature_sets.ipynb).
+5. Review and, if desired, rerun [`07_analyse_final_models.ipynb`](notebooks/07_analyse_final_models.ipynb).
+6. Review and, if desired, rerun [`08_run_advanced_experiments.ipynb`](notebooks/08_run_advanced_experiments.ipynb).
 7. Consult Notebooks 01–03 and 05 for the complete data-construction workflow.
-8. Consult [`requirements.txt`](requirements.txt), [`config.py`](config.py) and [`LICENSE`](LICENSE) for environment, path and licensing information.
+8. Consult [`requirements.txt`](requirements.txt) and [`LICENSE`](LICENSE) for software-environment and licensing information.
 
 ## Notebooks
 
@@ -52,64 +59,72 @@ For a concise review of the project and its reproducibility, the following order
 | 1 | [`01_build_lte_5g_labels.ipynb`](notebooks/01_build_lte_5g_labels.ipynb) | Builds the England grid and constructs LTE and 5G NR labels | Original Ofcom files |
 | 2 | [`02_build_environmental_features.ipynb`](notebooks/02_build_environmental_features.ipynb) | Extracts satellite, land-cover, population and night-time-light variables | Notebook 1 outputs and Google Earth Engine |
 | 3 | [`03_build_opencellid_features.ipynb`](notebooks/03_build_opencellid_features.ipynb) | Constructs OpenCellID-derived variables | Notebook 2 outputs and the original OpenCellID file |
-| 4 | [`04_exploratory_data_analysis.ipynb`](notebooks/04_exploratory_data_analysis.ipynb) | Examines the targets, predictors and spatial patterns | Provided processed data |
+| 4 | [`04_exploratory_data_analysis.ipynb`](notebooks/04_exploratory_data_analysis.ipynb) | Examines the targets, predictors and spatial patterns | Provided Dataset20 files |
 | 5 | [`05_build_progressive_features.ipynb`](notebooks/05_build_progressive_features.ipynb) | Constructs the progressive feature sets, Datasets21–25 | Dataset20 and the original OpenCellID file |
-| 6 | [`06_compare_feature_sets.ipynb`](notebooks/06_compare_feature_sets.ipynb) | Compares model performance across Dataset19–25 | Provided processed data |
-| 7 | [`07_analyse_final_models.ipynb`](notebooks/07_analyse_final_models.ipynb) | Evaluates and interprets the final LightGBM models | Provided processed data |
-| 8 | [`08_run_advanced_experiments.ipynb`](notebooks/08_run_advanced_experiments.ipynb) | Runs imbalance, binary, threshold, spatial, ablation and hierarchical experiments | Provided processed data |
+| 6 | [`06_compare_feature_sets.ipynb`](notebooks/06_compare_feature_sets.ipynb) | Compares model performance across Dataset19–25 | Provided Dataset19–25 CSV files |
+| 7 | [`07_analyse_final_models.ipynb`](notebooks/07_analyse_final_models.ipynb) | Evaluates and interprets the final LightGBM models | Provided Dataset25 CSV file |
+| 8 | [`08_run_advanced_experiments.ipynb`](notebooks/08_run_advanced_experiments.ipynb) | Runs imbalance, binary, threshold, spatial, ablation and hierarchical experiments | Provided Dataset25 CSV file |
 
 ## Reproducing the main analyses
 
 The original Ofcom measurement files and OpenCellID records are not redistributed in this repository because of their size and external-source status. Their official source links, expected filenames and access requirements are documented in [`DATA.md`](DATA.md).
 
-Analysis-ready grid-level datasets are provided in `processed/`. These files allow the dissertation's main analyses to be reproduced without downloading the original measurement-level data.
+Analysis-ready grid-level datasets are provided in `processed/`. These files allow the main analyses to be reproduced without downloading and processing the original measurement-level data.
 
-The following notebooks can be run using the provided processed datasets:
+The following notebooks can be evaluated using the provided processed datasets:
 
 - [`04_exploratory_data_analysis.ipynb`](notebooks/04_exploratory_data_analysis.ipynb)
 - [`06_compare_feature_sets.ipynb`](notebooks/06_compare_feature_sets.ipynb)
 - [`07_analyse_final_models.ipynb`](notebooks/07_analyse_final_models.ipynb)
 - [`08_run_advanced_experiments.ipynb`](notebooks/08_run_advanced_experiments.ipynb)
 
-Notebook 5 is not required for this reproduction route because its Dataset21–25 outputs are already included in `processed/`.
+Their principal input requirements are:
 
-The four notebooks load their required processed datasets independently. They do not need to be executed in the same notebook session.
+| Notebook | Required processed files |
+| -------- | ------------------------ |
+| Notebook 04 | `dataset20_final.csv` and `dataset20_final.gpkg` |
+| Notebook 06 | Dataset19–25 CSV files |
+| Notebook 07 | `dataset25_final.csv` |
+| Notebook 08 | `dataset25_final.csv` |
 
-## Running the main analyses in Google Colab
+Notebook 05 does not need to be rerun for this reproduction route because its Dataset21–25 outputs are already provided in `processed/`.
 
-The main analysis notebooks can be opened directly in Google Colab:
+The four main analysis notebooks use their required processed datasets independently and do not need to be executed in the same notebook session.
 
-- [Open Notebook 04 in Google Colab](https://colab.research.google.com/github/bong33kr63-ux/england-lte-5g-signal-prediction/blob/main/notebooks/04_exploratory_data_analysis.ipynb)
-- [Open Notebook 06 in Google Colab](https://colab.research.google.com/github/bong33kr63-ux/england-lte-5g-signal-prediction/blob/main/notebooks/06_compare_feature_sets.ipynb)
-- [Open Notebook 07 in Google Colab](https://colab.research.google.com/github/bong33kr63-ux/england-lte-5g-signal-prediction/blob/main/notebooks/07_analyse_final_models.ipynb)
-- [Open Notebook 08 in Google Colab](https://colab.research.google.com/github/bong33kr63-ux/england-lte-5g-signal-prediction/blob/main/notebooks/08_run_advanced_experiments.ipynb)
+## Running the notebooks
 
-After opening a notebook, select **Runtime → Run all**. The first setup cell downloads the repository to the temporary Colab runtime and loads the required files from `processed/`. Google Drive access and the original Ofcom and OpenCellID files are not required for these four notebooks.
+The notebooks were developed in Google Colab and contain paths corresponding to the original Google Drive folder structure.
 
-The notebooks are independent and do not need to be executed in the same Colab session. Notebooks 06 and 08 perform repeated cross-validation experiments and may take considerably longer than Notebooks 04 and 07.
+To rerun a notebook:
 
-A fixed `random_state=42` is used where supported by the estimator. The same fold-generation procedures are retained to support comparability and reproducibility.
+1. Download or clone this repository.
+2. Place the required processed files in an accessible local or Google Drive folder.
+3. Open the relevant notebook in Google Colab or another compatible Jupyter environment.
+4. Update the input and output paths in the notebook setup cells to match the selected folder structure.
+5. Install any missing packages listed in [`requirements.txt`](requirements.txt).
+6. Run the notebook cells in order.
 
-## Local execution
+For example, Notebook 04 requires the supplied `dataset20_final.csv` and `dataset20_final.gpkg`, while Notebooks 07 and 08 require `dataset25_final.csv`.
 
-For local execution, clone the complete repository:
+Notebooks 06 and 08 perform repeated cross-validation experiments and may take considerably longer than Notebooks 04 and 07.
 
-```bash
-git clone https://github.com/bong33kr63-ux/england-lte-5g-signal-prediction.git
-cd england-lte-5g-signal-prediction
-```
-
-Install the required Python packages:
-
-```bash
-pip install -r requirements.txt
-```
-
-The complete repository should be retained because the notebooks require both `config.py` and the datasets contained in `processed/`.
+A fixed `random_state=42` is used where supported by the estimator. The same fold-generation procedures are retained to support comparability and reproducibility. Minor numerical differences may nevertheless occur because of differences in package versions, operating systems or computational environments.
 
 ## Reconstructing the datasets from source data
 
-Notebooks 01–03 and 05 document the complete data-construction and feature-engineering workflow. They are not required to reproduce the main modelling results provided in Notebooks 04, 06, 07 and 08.
+Notebooks 01–03 and 05 document the complete data-construction and feature-engineering workflow. They are not required to reproduce the main modelling results using the supplied processed datasets.
+
+The complete data-construction sequence is:
+
+```text
+01_build_lte_5g_labels.ipynb
+        ↓
+02_build_environmental_features.ipynb
+        ↓
+03_build_opencellid_features.ipynb
+        ↓
+05_build_progressive_features.ipynb
+```
 
 Reconstructing the datasets from the original sources requires:
 
@@ -119,13 +134,19 @@ Reconstructing the datasets from the original sources requires:
 - access to an enabled Google Cloud project; and
 - the source-specific folder structure described in [`DATA.md`](DATA.md).
 
-Because external datasets may be updated after the dissertation was completed, newly downloaded source files may not be identical to the versions used in the submitted analysis.
+Because externally maintained datasets may be updated after the dissertation was completed, newly downloaded source files may not be identical to the versions used in the submitted analysis.
 
 ## Data and attribution
 
-The processed datasets contain grid-level labels and predictors generated for this study. They should not be interpreted as raw Ofcom measurements or verified counts of physical base stations.
+The processed datasets contain grid-level labels and predictors generated for this study. They are not copies of the raw Ofcom measurement files and should not be interpreted as independently verified counts of physical base stations.
 
 OpenCellID-derived variables represent aggregated records from the OpenCellID database. Please consult [`DATA.md`](DATA.md) for the relevant source, licence and attribution information.
+
+## Licence
+
+The original project code in this repository is released under the [MIT License](LICENSE).
+
+This licence applies to the project code and does not override the licences or terms of the external data sources. Ofcom, OpenCellID, Google Earth Engine datasets, GADM and derived data remain subject to the relevant providers' terms and attribution requirements. See [`DATA.md`](DATA.md) for details.
 
 ## Author
 
