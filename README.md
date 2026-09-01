@@ -14,8 +14,8 @@ Random Forest, XGBoost and LightGBM were compared for three signal-quality class
 
 - The final dataset contains 4,985 grid cells with at least one LTE or 5G NR label and 35 predictors.
 - Class-weighted LightGBM achieved mean five-fold CV Macro-F1 scores of 0.4845 for LTE and 0.5348 for 5G NR.
-- Poor LTE observations represent only 2.43% of the LTE-labelled grids, making this class particularly difficult to identify.
-- Using 50 km spatial blocks, mean Macro-F1 decreased to 0.4210 for LTE and 0.4519 for 5G NR.
+- Poor LTE grids account for only 2.43% of the LTE-labelled sample, making this class particularly difficult to identify.
+- Using 50 km spatial blocks, mean Spatial-CV Macro-F1 decreased to 0.4210 for LTE and 0.4519 for 5G NR.
 - The ablation experiments indicated that geographic context was the most consistently useful predictor group.
 
 ## Repository structure
@@ -138,9 +138,7 @@ Because externally maintained datasets may be updated after the dissertation was
 
 ## Data and attribution
 
-The processed datasets contain grid-level labels and predictors generated for this study. They are not copies of the raw Ofcom measurement files and should not be interpreted as independently verified counts of physical base stations.
-
-OpenCellID-derived variables represent aggregated records from the OpenCellID database. Please consult [`DATA.md`](DATA.md) for the relevant source, licence and attribution information.
+The processed datasets contain grid-level labels and predictors generated for this study and are not copies of the raw Ofcom measurement files. OpenCellID-derived variables represent aggregated database records and should not be interpreted as verified counts of physical base stations. Please consult [`DATA.md`](DATA.md) for the relevant source, licence and attribution information.
 
 ## Licence
 
